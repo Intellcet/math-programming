@@ -1,9 +1,12 @@
 import React from 'react';
 
-import styles from './App.module.pcss';
+import './App.pcss';
+import MatrixBlock from '../MatrixBlock';
 
-const GrayBlock = (): React.ReactElement => (
-  <div className={styles.root}>Its gray block</div>
+const App = (): React.ReactElement => (
+  <React.Fragment>
+    <MatrixBlock />
+  </React.Fragment>
 );
 
-export default GrayBlock;
+export default App;
