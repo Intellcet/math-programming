@@ -1,11 +1,12 @@
 import React from 'react';
 
+import JordanPage from '../../pages/jordan';
+
 import './App.pcss';
-import MatrixBlock from '../MatrixBlock';
 
 const App = (): React.ReactElement => (
   <React.Fragment>
-    <MatrixBlock />
+    <JordanPage />
   </React.Fragment>
 );
 
