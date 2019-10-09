@@ -51,7 +51,7 @@ const MatrixContainer = (): React.ReactElement => {
     <React.Fragment>
       {matrixToRender && (
         <section className={styles.matrixContainer}>
-          <PageLayout>
+          <PageLayout className={styles.matrixWrapper}>
             <div>
               {matrixToRender.map((cols, idxCol) => (
                 <div key={idxCol}>

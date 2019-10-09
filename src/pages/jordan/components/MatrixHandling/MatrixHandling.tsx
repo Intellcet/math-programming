@@ -10,8 +10,8 @@ import styles from './MatrixHandling.module.pcss';
 
 const MatrixHandling = (): React.ReactElement => {
   const [errorCode, setErrorCode] = useState<ErrorCodes>(ErrorCodes.noError);
-  const [cols, setCols] = useState(0);
-  const [rows, setRows] = useState(0);
+  const [cols, setCols] = useState(1);
+  const [rows, setRows] = useState(1);
   const { matrix, setMatrix } = useMatrix();
 
   const handleRowsChange = (
