@@ -3,6 +3,13 @@ import React, { useContext, useMemo, useState } from 'react';
 type Matrix = {
   cols: number;
   rows: number;
+  values?: number[][];
+  isLookingJordanNumber?: boolean;
+  jordanNumber?: {
+    i: number;
+    j: number;
+    value: number;
+  };
 };
 
 type MatrixContextType = {

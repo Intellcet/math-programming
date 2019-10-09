@@ -10,16 +10,20 @@ import styles from './MatrixContainer.module.pcss';
 const genMatrixForRender = ({
   cols,
   rows,
+  values,
 }: {
   cols: number;
   rows: number;
+  values?: number[][];
 }): number[][] | null => {
   if (cols === 0 && rows === 0) return null;
   const matrix: number[][] = [];
   for (let i = 0; i < rows; i += 1) {
     matrix.push([]);
     for (let j = 0; j < cols; j += 1) {
-      matrix[i].push(i + j);
+      matrix[i].push(
+        values && values[i] && values[i][j] ? values[i][j] : i + j
+      );
     }
   }
 
@@ -27,7 +31,7 @@ const genMatrixForRender = ({
 };
 
 const MatrixContainer = (): React.ReactElement => {
-  const { matrix } = useMatrix();
+  const { matrix, setMatrix } = useMatrix();
   const [matrixToRender, setMatrixToRender] = useState(
     genMatrixForRender(matrix)
   );
@@ -36,23 +40,31 @@ const MatrixContainer = (): React.ReactElement => {
     if (matrixToRender) {
       matrixToRender[i][j] = value < 1000 ? value : 999;
       setMatrixToRender([...matrixToRender]);
+      matrix.values = [...matrixToRender];
+    }
+  };
+
+  const handleMatrixCellClick = ({ i, j }: { i: number; j: number }): void => {
+    if (matrix.values && matrix.isLookingJordanNumber) {
+      matrix.jordanNumber = { i, j, value: matrix.values[i][j] };
+      setMatrix({ ...matrix });
     }
   };
 
   useEffect(() => {
-    setMatrixToRender(genMatrixForRender(matrix));
+    const matr = genMatrixForRender(matrix);
+    setMatrixToRender(matr);
+    if (matr) {
+      matrix.values = [...matr];
+    }
   }, [matrix]);
-
-  const handleCountButtonClick = () => {
-    console.log(matrixToRender);
-  };
 
   return (
     <React.Fragment>
       {matrixToRender && (
-        <section className={styles.matrixContainer}>
-          <PageLayout className={styles.matrixWrapper}>
-            <div>
+        <React.Fragment>
+          <section className={styles.matrixContainer}>
+            <PageLayout className={styles.matrixWrapper}>
               {matrixToRender.map((cols, idxCol) => (
                 <div key={idxCol}>
                   {cols.map((el, idxRow) => (
@@ -66,13 +78,16 @@ const MatrixContainer = (): React.ReactElement => {
                           j: idxRow,
                         })
                       }
+                      onClick={() =>
+                        handleMatrixCellClick({ i: idxCol, j: idxRow })
+                      }
                     />
                   ))}
                 </div>
               ))}
-            </div>
-          </PageLayout>
-        </section>
+            </PageLayout>
+          </section>
+        </React.Fragment>
       )}
     </React.Fragment>
   );

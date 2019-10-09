@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import cn from 'clsx';
 
 import PageLayout from '../../../../components/PageLayout';
@@ -69,6 +69,17 @@ const MatrixHandling = (): React.ReactElement => {
     setMatrix({ ...matrix });
   };
 
+  const handleCountJordan = () => {
+    matrix.isLookingJordanNumber = !matrix.isLookingJordanNumber;
+    setMatrix({ ...matrix });
+  };
+
+  useEffect(() => {
+    if (matrix.jordanNumber && matrix.isLookingJordanNumber) {
+      console.log(matrix.jordanNumber);
+    }
+  }, [matrix]);
+
   return (
     <section className={styles.matrixHandlingContainer}>
       <PageLayout>
@@ -95,12 +106,24 @@ const MatrixHandling = (): React.ReactElement => {
               type="number"
             />
           </p>
-          <button
-            className={styles.createMatrixButton}
-            onClick={handleCreateMatrix}
-          >
-            Создать матрицу
-          </button>
+          <div className={styles.buttonsContainer}>
+            <button
+              className={styles.handlingButton}
+              onClick={handleCreateMatrix}
+            >
+              Создать матрицу
+            </button>
+            {matrix.cols !== 0 && matrix.rows !== 0 && (
+              <button
+                className={styles.handlingButton}
+                onClick={handleCountJordan}
+              >
+                {matrix.isLookingJordanNumber
+                  ? 'Отменить выбор Жорданова числа'
+                  : 'Выбрать Жорданово число и посчитать'}
+              </button>
+            )}
+          </div>
           <p
             className={cn(
               styles.errorText,
