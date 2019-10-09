@@ -1,9 +1,13 @@
 import React from 'react';
 
-import styles from './App.module.pcss';
+import JordanPage from '../../pages/jordan';
 
-const GrayBlock = (): React.ReactElement => (
-  <div className={styles.root}>Its gray block</div>
+import './App.pcss';
+
+const App = (): React.ReactElement => (
+  <React.Fragment>
+    <JordanPage />
+  </React.Fragment>
 );
 
-export default GrayBlock;
+export default App;

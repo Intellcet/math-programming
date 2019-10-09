@@ -1,4 +1,4 @@
 declare const styles: {
-  readonly root: string;
+  readonly pageLayout: string;
 };
 export = styles;
