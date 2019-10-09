@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import cn from 'clsx';
 
 import PageLayout from '../../../../components/PageLayout';
+import { useMatrix } from '../MatrixProvider';
 
 import { ErrorCodes, errors } from './ErrorsWithCreatingMatrix';
 
@@ -11,6 +12,7 @@ const MatrixHandling = (): React.ReactElement => {
   const [errorCode, setErrorCode] = useState<ErrorCodes>(ErrorCodes.noError);
   const [cols, setCols] = useState(0);
   const [rows, setRows] = useState(0);
+  const { matrix, setMatrix } = useMatrix();
 
   const handleRowsChange = (
     ev: React.SyntheticEvent<HTMLInputElement>
@@ -45,7 +47,9 @@ const MatrixHandling = (): React.ReactElement => {
       setErrorCode(ErrorCodes.bothError);
     } else {
       setErrorCode(ErrorCodes.noError);
-      console.log(cols, rows);
+      matrix.rows = rows;
+      matrix.cols = cols;
+      setMatrix({ ...matrix });
     }
   };
 

@@ -1,13 +1,15 @@
 import React from 'react';
 
-import styles from './JordanPage.module.pcss';
+import Matrix from './components/MatrixProvider';
 import MatrixHandling from './components/MatrixHandling';
 
 const JordanPage = (): React.ReactElement => {
   return (
-    <div className={styles.pageContainer}>
-      <MatrixHandling />
-    </div>
+    <React.Fragment>
+      <Matrix>
+        <MatrixHandling />
+      </Matrix>
+    </React.Fragment>
   );
 };
 
