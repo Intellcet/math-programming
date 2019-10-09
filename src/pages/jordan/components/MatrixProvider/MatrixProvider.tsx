@@ -1,15 +1,17 @@
 import React, { useContext, useMemo, useState } from 'react';
 
-type Matrix = {
+export type JordanNumber = {
+  i: number;
+  j: number;
+  value: number;
+};
+
+export type Matrix = {
   cols: number;
   rows: number;
   values?: number[][];
   isLookingJordanNumber?: boolean;
-  jordanNumber?: {
-    i: number;
-    j: number;
-    value: number;
-  };
+  jordanNumber?: JordanNumber;
 };
 
 type MatrixContextType = {

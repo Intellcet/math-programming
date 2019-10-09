@@ -7,6 +7,7 @@ import { useMatrix } from '../MatrixProvider';
 import { ErrorCodes, errors } from './ErrorsWithCreatingMatrix';
 
 import styles from './MatrixHandling.module.pcss';
+import { calculateJordan } from './Jordan';
 
 const MatrixHandling = (): React.ReactElement => {
   const [errorCode, setErrorCode] = useState<ErrorCodes>(ErrorCodes.noError);
@@ -76,7 +77,12 @@ const MatrixHandling = (): React.ReactElement => {
 
   useEffect(() => {
     if (matrix.jordanNumber && matrix.isLookingJordanNumber) {
-      console.log(matrix.jordanNumber);
+      const result = calculateJordan(matrix);
+      if (result) {
+        matrix.isLookingJordanNumber = false;
+        matrix.jordanNumber = undefined;
+        setMatrix({ ...matrix, values: result });
+      }
     }
   }, [matrix]);
 
