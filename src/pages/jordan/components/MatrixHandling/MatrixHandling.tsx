@@ -25,7 +25,11 @@ const MatrixHandling = (): React.ReactElement => {
     } else {
       setRows(Number(value));
     }
-    setErrorCode(ErrorCodes.noError);
+    if (cols === 0) {
+      setErrorCode(ErrorCodes.colsError);
+    } else {
+      setErrorCode(ErrorCodes.noError);
+    }
   };
 
   const handleColsChange = (
@@ -39,18 +43,30 @@ const MatrixHandling = (): React.ReactElement => {
     } else {
       setCols(Number(value));
     }
-    setErrorCode(ErrorCodes.noError);
+    if (rows === 0) {
+      setErrorCode(ErrorCodes.rowsError);
+    } else {
+      setErrorCode(ErrorCodes.noError);
+    }
   };
 
   const handleCreateMatrix = () => {
     if (cols === 0 && rows === 0) {
       setErrorCode(ErrorCodes.bothError);
-    } else {
-      setErrorCode(ErrorCodes.noError);
-      matrix.rows = rows;
-      matrix.cols = cols;
-      setMatrix({ ...matrix });
+      return;
     }
+    if (cols === 0) {
+      setErrorCode(ErrorCodes.colsError);
+      return;
+    }
+    if (rows === 0) {
+      setErrorCode(ErrorCodes.rowsError);
+      return;
+    }
+    setErrorCode(ErrorCodes.noError);
+    matrix.rows = rows;
+    matrix.cols = cols;
+    setMatrix({ ...matrix });
   };
 
   return (
