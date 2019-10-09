@@ -4,7 +4,8 @@ declare const styles: {
   readonly setMatrixElementContainer: string;
   readonly planeText: string;
   readonly inputMatrixSize: string;
-  readonly createMatrixButton: string;
+  readonly buttonsContainer: string;
+  readonly handlingButton: string;
   readonly errorText: string;
   readonly errorTextShown: string;
 };

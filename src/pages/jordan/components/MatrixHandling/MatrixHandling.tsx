@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import cn from 'clsx';
 
 import PageLayout from '../../../../components/PageLayout';
@@ -7,6 +7,7 @@ import { useMatrix } from '../MatrixProvider';
 import { ErrorCodes, errors } from './ErrorsWithCreatingMatrix';
 
 import styles from './MatrixHandling.module.pcss';
+import { calculateJordan } from './Jordan';
 
 const MatrixHandling = (): React.ReactElement => {
   const [errorCode, setErrorCode] = useState<ErrorCodes>(ErrorCodes.noError);
@@ -69,6 +70,22 @@ const MatrixHandling = (): React.ReactElement => {
     setMatrix({ ...matrix });
   };
 
+  const handleCountJordan = () => {
+    matrix.isLookingJordanNumber = !matrix.isLookingJordanNumber;
+    setMatrix({ ...matrix });
+  };
+
+  useEffect(() => {
+    if (matrix.jordanNumber && matrix.isLookingJordanNumber) {
+      const result = calculateJordan(matrix);
+      if (result) {
+        matrix.isLookingJordanNumber = false;
+        matrix.jordanNumber = undefined;
+        setMatrix({ ...matrix, values: result });
+      }
+    }
+  }, [matrix]);
+
   return (
     <section className={styles.matrixHandlingContainer}>
       <PageLayout>
@@ -95,12 +112,24 @@ const MatrixHandling = (): React.ReactElement => {
               type="number"
             />
           </p>
-          <button
-            className={styles.createMatrixButton}
-            onClick={handleCreateMatrix}
-          >
-            Создать матрицу
-          </button>
+          <div className={styles.buttonsContainer}>
+            <button
+              className={styles.handlingButton}
+              onClick={handleCreateMatrix}
+            >
+              Создать матрицу
+            </button>
+            {matrix.cols !== 0 && matrix.rows !== 0 && (
+              <button
+                className={styles.handlingButton}
+                onClick={handleCountJordan}
+              >
+                {matrix.isLookingJordanNumber
+                  ? 'Отменить выбор Жорданова числа'
+                  : 'Выбрать Жорданово число и посчитать'}
+              </button>
+            )}
+          </div>
           <p
             className={cn(
               styles.errorText,
